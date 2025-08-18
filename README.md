@@ -20,3 +20,18 @@ Didesain modular dengan JobRunner V2 (queue, worker, retry, stats), support mult
 - 🌐 Support Auto Proxy Idle (opsional)
 
 ---
+
+## 🔄 Arsitektur & Alur Kerja
+
+```mermaid
+flowchart TD
+    A[Telegram User / Command] -->|/xthieves /dash| B(Telegram Bot)
+    B --> C{JobRunner V2}
+    C -->|enqueue| D[Job Queue]
+    D --> E[Worker 1..N]
+    E -->|call| F[ChatFunctions.js]
+    F -->|sendMessage| G[WhatsApp Socket (Baileys)]
+    G --> H[Target User di WhatsApp]
+
+    C --> I[/Stats & Monitoring/]
+    I -->|/dash| B
